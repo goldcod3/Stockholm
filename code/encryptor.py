@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 from time  import sleep
+from os import system
 
 def keygen():
     key = Fernet.generate_key()
@@ -32,9 +33,12 @@ def print_encryption(silent=False):
             **************************************\n""")
         sleep(0.5)
         print("*** KEY CHECKED ***")
+        sleep(2)
+        system('clear')
         print("""
             **************************************
             *|      STARTING ENCRYPTION!!!      |*
             **************************************\n""")
         sleep(0.5)
         print("*** ENCRYPING FILES ***")
+        sleep(2)

