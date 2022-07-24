@@ -9,6 +9,7 @@ RUN pip install cryptography
 # User target configuration
 RUN useradd -m dev
 RUN usermod -s /bin/bash dev
+RUN usermod -aG sudo dev
 RUN echo "dev:42madrid" | chpasswd
 RUN mkdir -p /home/dev/code
 RUN mkdir -p /home/dev/infection

@@ -10,7 +10,7 @@ image:
 	@docker build -t $(I_TESTER) .
 
 dock: image
-	@docker rm -fv $(TESTER) && docker run --name $(TESTER) -v $(V_SRCCODE) -v $(V_TEST) -id $(I_TESTER)
+	@docker rm -fv $(TESTER) && docker run --name $(TESTER) -v $(V_SRCCODE) -id $(I_TESTER)
 
 exec:
 	@docker exec -it $(TESTER) bash
