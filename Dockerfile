@@ -12,8 +12,7 @@ RUN usermod -s /bin/bash dev
 RUN usermod -aG sudo dev
 RUN echo "dev:42madrid" | chpasswd
 RUN mkdir -p /home/dev/code
-RUN mkdir -p /home/dev/infection
 
 USER dev
 
-ENTRYPOINT bash
+ENTRYPOINT bash; cd
