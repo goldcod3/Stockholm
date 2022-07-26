@@ -1,21 +1,9 @@
 from cryptography.fernet import Fernet
-from os import system, rename
+from os import rename
 from os.path import splitext
-from time import sleep
+from print_action import print_decryption, print_decrypt_file
 
-# Funcion verbose mode
-def print_decryption(silent=False):
-    if silent == False:
-        system('clear')
-        print("""
-            **************************************
-            *|      STARTING DECRYPTION!!!      |*
-            **************************************\n""")
-        sleep(0.5)
-        print("*** DECRYPTING FILES ***")
-        sleep(2)
-
-# Funcion que descifra un directorio
+# Function for decrypt a directory
 def decrypt_dirs(key=None,lst_dir=[],silent=False):
     print_decryption(silent)
     if len(lst_dir) > 0 and key != None:
@@ -24,39 +12,30 @@ def decrypt_dirs(key=None,lst_dir=[],silent=False):
                     if len(dir) > 0:
                         for file in index_dir[lst_files]:
                             status = decrypt_file(file=file,key=key,silent=silent)
-                            if silent == False and status == True:
-                                print("[$] -> FILE DECRYPTED {:>35}"
-                                .format(file.replace(lst_files+"/", "").replace('.ft',""), end=""))
-                                sleep(0.2)
+                            print_decrypt_file(result=status,file=file,silent=silent)
                     else:
                         if silent == False:
-                            print("NO FILES TO ENCRYPT -- ENCRYPTION DISABLED!!")
+                            print("""[X] {}
+                            NO FILES TO DECRYPT -- ENCRYPTION DISABLED!!""".format(lst_files))
         if silent == False:
-            print("*** STOPING STOCKHOLM***")
+            print("*** STOPING STOCKHOLM ***")
 
-
-# Funcion de descifrado de archivo
+# Function for decrypt a file
 def decrypt_file(file,key,silent=False):
     try:
+        # Module Fernet to decrypt
         fern = Fernet(key)
-        with open(file,"rb") as target_r:
+        with open(file,"rb") as target_r: 
             encrypted_data = target_r.read()
+        # Data decrypted from file
         decrypt_data = fern.decrypt(encrypted_data)
+        # Write decrypted data on file
         with open(file,"wb") as target_w:
             target_w.write(decrypt_data)
-        f,ext = splitext(file)
+        # Rename the file
+        name,ext = splitext(file)
         if ext == ".ft":
-            rename(file,f)
+            rename(file,name)
         return True
-    except ValueError:
-        if silent == False:
-            print("[X] -> ERROR KEY TO FILE {} - TRY OTHER KEY\n"
-            .format(file), end="")
-            sleep(0.2)
-        return False
     except Exception:
-        if silent == False:
-            print("[X] -> ERROR DECRYPT {:>35}\n"
-            .format(file), end="")
-            sleep(0.2)
         return False
