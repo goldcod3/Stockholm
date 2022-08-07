@@ -52,6 +52,8 @@ unzip out.zip
 cd out; ./stockholm
 ```
 
+For more information about the project click [here](https://goldcod3.github.io/project/proyect-stockholm)
+
 ---
 Finished proyect.
 
